@@ -104,6 +104,7 @@ const ResultsCard = memo(({ dish, position }) => {
                             loading="lazy"
                             decoding="async"
                         />
+                    </div>
 
                 {/* Main Content - Flexible */}
                 <div className="flex-1 min-w-0">
