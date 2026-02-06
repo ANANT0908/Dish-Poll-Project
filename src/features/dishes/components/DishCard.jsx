@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState, memo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setVote, clearVote } from '../../poll/pollSlice';
 import { selectUserDishRank, selectTakenRanks } from '../../poll/pollSelectors';
@@ -22,7 +22,7 @@ const DishCard = memo(({ dish }) => {
         selectTakenRanks(currentUser?.id)(state)
     );
 
-    const handleRankChange = (rank) => {
+    const handleRankChange = useCallback((rank) => {
         if (rank === null) {
             dispatch(clearVote({
                 userId: currentUser.id,
@@ -37,11 +37,11 @@ const DishCard = memo(({ dish }) => {
             }));
             logger.debug('Vote set', { dishId: dish.id, rank });
         }
-    };
+    }, [currentUser?.id, dish.id, dispatch]);
 
-    const isRankTaken = (rank) => {
+    const isRankTaken = useCallback((rank) => {
         return takenRanks.includes(rank) && currentRank !== rank;
-    };
+    }, [takenRanks, currentRank]);
 
     const handleImageError = () => {
         logger.warn('Failed to load image', { dishId: dish.id, url: dish.image });
@@ -69,16 +69,17 @@ const DishCard = memo(({ dish }) => {
             {/* Image Container */}
             <div className="relative h-40 sm:h-48 lg:h-56 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
                 {imageLoading && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 animate-shimmer" 
-                         style={{ backgroundSize: '200% 100%' }} />
+                    <div className="absolute inset-0 bg-gray-200 animate-shimmer" 
+                         style={{ backgroundSize: '100%' }} />
                 )}
                 <img
                     src={imageUrl}
                     alt={dish.dishName}
-                    className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
+                    className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
                     onError={handleImageError}
                     onLoad={() => setImageLoading(false)}
                     loading="lazy"
+                    decoding="async"
                 />
                 
                 {/* Rank Badge */}
@@ -89,8 +90,8 @@ const DishCard = memo(({ dish }) => {
                     </div>
                 )}
                 
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {/* Gradient overlay - optimized for performance */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
             </div>
 
             {/* Content Container */}
@@ -112,7 +113,7 @@ const DishCard = memo(({ dish }) => {
             </div>
         </div>
     );
-}, (prevProps, nextProps) => prevProps.dish.id === nextProps.dish.id);
+});
 
 DishCard.displayName = 'DishCard';
 

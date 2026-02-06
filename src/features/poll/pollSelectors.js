@@ -7,22 +7,36 @@ const RANK_POINTS = {
     3: 10
 };
 
+// Memoize selector factories to ensure same selector instance for same userId
+const userVotesCache = new Map();
+const takenRanksCache = new Map();
+
 export const selectAllVotes = (state) => state.poll.votes;
 
-export const selectUserVotes = (userId) => createSelector(
-    [selectAllVotes],
-    (votes) => votes[userId] || {}
-);
+export const selectUserVotes = (userId) => {
+    if (!userVotesCache.has(userId)) {
+        userVotesCache.set(userId, createSelector(
+            [selectAllVotes],
+            (votes) => votes[userId] || {}
+        ));
+    }
+    return userVotesCache.get(userId);
+};
 
 export const selectUserDishRank = (userId, dishId) => createSelector(
     [selectUserVotes(userId)],
     (userVotes) => userVotes[dishId] || null
 );
 
-export const selectTakenRanks = (userId) => createSelector(
-    [selectUserVotes(userId)],
-    (userVotes) => Object.values(userVotes)
-);
+export const selectTakenRanks = (userId) => {
+    if (!takenRanksCache.has(userId)) {
+        takenRanksCache.set(userId, createSelector(
+            [selectUserVotes(userId)],
+            (userVotes) => Object.values(userVotes)
+        ));
+    }
+    return takenRanksCache.get(userId);
+};
 
 export const selectPollResults = createSelector(
     [selectAllVotes, selectAllDishes],
@@ -56,15 +70,23 @@ export const selectPollResults = createSelector(
     }
 );
 
-export const selectPollResultsWithUserRanks = (userId) => createSelector(
-    [selectPollResults, selectUserVotes(userId)],
-    (results, userVotes) => {
-        return results.map(dish => ({
-            ...dish,
-            userRank: userVotes[dish.id] || null
-        }));
+// Memoize factory function for poll results with user ranks
+const pollResultsWithUserRanksCache = new Map();
+
+export const selectPollResultsWithUserRanks = (userId) => {
+    if (!pollResultsWithUserRanksCache.has(userId)) {
+        pollResultsWithUserRanksCache.set(userId, createSelector(
+            [selectPollResults, selectUserVotes(userId)],
+            (results, userVotes) => {
+                return results.map(dish => ({
+                    ...dish,
+                    userRank: userVotes[dish.id] || null
+                }));
+            }
+        ));
     }
-);
+    return pollResultsWithUserRanksCache.get(userId);
+};
 
 export const selectUserRankedDishes = (userId) => createSelector(
     [selectUserVotes(userId), selectAllDishes],

@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { store, persistor } from './app/store';
 import App from './App';
 import './styles/index.css';
+import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,3 +20,12 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
+
+// Enable performance monitoring for Lighthouse audits
+reportWebVitals((result) => {
+  // Send to analytics if needed
+  if (process.env.NODE_ENV === 'production') {
+    // Metrics available: name, value, id, navigationType
+    console.debug('Web Vital:', result);
+  }
+});

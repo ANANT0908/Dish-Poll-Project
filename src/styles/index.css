@@ -2,6 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Optimized font loading with font-display: swap for faster rendering */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 @layer base {
@@ -10,8 +11,8 @@
   }
   
   html {
-    @apply scroll-smooth;
-    scroll-behavior: smooth;
+    /* Removed scroll-smooth for better performance - prevents jank during scroll */
+    scroll-behavior: auto;
   }
   
   body {

@@ -75,17 +75,18 @@ export default {
                     '0%': { transform: 'scale(0.95)', opacity: '0' },
                     '100%': { transform: 'scale(1)', opacity: '1' },
                 },
+                // Optimized shimmer - reduced complexity for better performance
                 shimmer: {
-                    '0%': { backgroundPosition: '-1000px 0' },
-                    '100%': { backgroundPosition: '1000px 0' },
+                    '0%': { backgroundPosition: '0 0' },
+                    '100%': { backgroundPosition: '200% 0' },
                 },
             },
             animation: {
-                fadeIn: 'fadeIn 0.3s ease-in',
-                slideIn: 'slideIn 0.3s ease-in-out',
-                slideDown: 'slideDown 0.3s ease-out',
-                scaleIn: 'scaleIn 0.2s ease-out',
-                shimmer: 'shimmer 2s infinite',
+                fadeIn: 'fadeIn 0.25s ease-in',
+                slideIn: 'slideIn 0.25s ease-in-out',
+                slideDown: 'slideDown 0.25s ease-out',
+                scaleIn: 'scaleIn 0.15s ease-out',
+                shimmer: 'shimmer 1.5s ease-in-out infinite',
             },
             boxShadow: {
                 sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',

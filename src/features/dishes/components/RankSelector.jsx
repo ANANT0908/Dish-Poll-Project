@@ -66,7 +66,11 @@ const RankSelector = memo(({ currentRank, onChange, isRankTaken, dishId }) => {
             )}
         </div>
     );
-}, (prev, next) => prev.currentRank === next.currentRank);
+}, (prev, next) => {
+    // Re-render only if currentRank changed or isRankTaken function changed
+    return prev.currentRank === next.currentRank && 
+           prev.isRankTaken === next.isRankTaken;
+});
 
 RankSelector.displayName = 'RankSelector';
 
