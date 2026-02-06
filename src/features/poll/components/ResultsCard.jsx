@@ -14,10 +14,10 @@ const ResultsCard = memo(({ dish, position }) => {
     };
 
     const getPositionStyles = (pos) => {
-        if (pos === 1) return 'bg-gradient-to-r from-yellow-50 via-amber-50 to-yellow-50 border-yellow-300 shadow-lg hover:shadow-xl';
-        if (pos === 2) return 'bg-gradient-to-r from-gray-50 via-slate-50 to-gray-50 border-gray-300 shadow-md hover:shadow-lg';
-        if (pos === 3) return 'bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50 border-orange-300 shadow-md hover:shadow-lg';
-        return 'bg-white border-gray-200 hover:shadow-md';
+        if (pos === 1) return 'bg-gradient-to-r from-yellow-50 via-amber-50 to-yellow-50 border-yellow-300 shadow-lg';
+        if (pos === 2) return 'bg-gradient-to-r from-gray-50 via-slate-50 to-gray-50 border-gray-300 shadow-md';
+        if (pos === 3) return 'bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50 border-orange-300 shadow-md';
+        return 'bg-white border-gray-200 shadow-sm';
     };
 
     const handleImageError = () => {
@@ -29,7 +29,7 @@ const ResultsCard = memo(({ dish, position }) => {
     const userRankColor = position === 1 ? 'bg-yellow-100 text-yellow-800' : position === 2 ? 'bg-gray-100 text-gray-800' : 'bg-orange-100 text-orange-800';
 
     return (
-        <div className={`rounded-xl border-2 overflow-hidden transition-all duration-300 ${getPositionStyles(position)} ${dish.userRank ? 'ring-4 ring-primary-300' : ''}`}>
+        <div className={`rounded-xl border-2 overflow-hidden transition-shadow duration-150 ${getPositionStyles(position)} ${dish.userRank ? 'ring-4 ring-primary-300' : ''}`}>
             {/* Mobile layout - stacked */}
             <div className="md:hidden flex flex-col gap-3 p-3 sm:p-4">
                 <div className="flex gap-3">
@@ -95,16 +95,15 @@ const ResultsCard = memo(({ dish, position }) => {
                     {getMedalEmoji(position)}
                 </div>
 
-                {/* Dish Image */}
-                <div className="flex-shrink-0 w-20 h-20 lg:w-24 lg:h-24">
-                    <img
-                        src={imageUrl}
-                        alt={dish.dishName}
-                        className="w-full h-full object-cover rounded-lg shadow-md hover:scale-110 transition-transform duration-300"
-                        onError={handleImageError}
-                        loading="lazy"
-                    />
-                </div>
+                    <div className="flex-shrink-0 w-20 h-20 lg:w-24 lg:h-24" style={{ contentVisibility: 'auto' }}>
+                        <img
+                            src={imageUrl}
+                            alt={dish.dishName}
+                            className="w-full h-full object-cover rounded-lg shadow-md"
+                            onError={handleImageError}
+                            loading="lazy"
+                            decoding="async"
+                        />
 
                 {/* Main Content - Flexible */}
                 <div className="flex-1 min-w-0">

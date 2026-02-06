@@ -1,6 +1,6 @@
 {
-  "short_name": "Dish Poll",
-  "name": "Dish Poll Project",
+  "short_name": "DishPoll",
+  "name": "DishPoll - Voting Platform",
   "icons": [
     {
       "src": "favicon.ico",
@@ -9,7 +9,18 @@
     }
   ],
   "start_url": ".",
+  "scope": "./",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "orientation": "portrait-primary",
+  "theme_color": "#0ea5e9",
+  "background_color": "#ffffff",
+  "categories": ["productivity"],
+  "screenshots": [
+    {
+      "src": "favicon.ico",
+      "sizes": "540x720",
+      "type": "image/x-icon",
+      "form_factor": "narrow"
+    }
+  ]
 }
