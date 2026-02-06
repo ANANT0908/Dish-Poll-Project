@@ -55,12 +55,12 @@ const LoginForm = memo(() => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const errors = validateForm();
-        
+
         if (Object.keys(errors).length > 0) {
             setFormErrors(errors);
             return;
         }
-        
+
         setFormErrors({});
         dispatch(loginUser(formData));
     };
@@ -89,8 +89,8 @@ const LoginForm = memo(() => {
             </div>
 
             {/* Main container */}
-            <div className="w-full h-full flex flex-col lg:flex-row relative z-20">
-                
+            <div className="w-full h-screen flex flex-col lg:flex-row relative z-20">
+
                 {/* Left side - Branding (hidden on mobile) */}
                 <div className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center px-12 text-white py-8">
                     <div className="text-center max-w-sm">
@@ -101,7 +101,7 @@ const LoginForm = memo(() => {
                         <p className="text-lg text-white text-opacity-90 mb-8 font-light tracking-wide leading-relaxed">
                             Collaborative Voting Platform
                         </p>
-                        
+
                         <div className="space-y-3 text-left bg-white bg-opacity-[0.08] backdrop-blur-xl rounded-3xl p-8 border border-white border-opacity-20 shadow-2xl">
                             <div className="flex items-start gap-4">
                                 <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-white bg-opacity-20 flex items-center justify-center">
@@ -135,21 +135,20 @@ const LoginForm = memo(() => {
                 </div>
 
                 {/* Right side - Login form */}
-                <div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-6 lg:px-12 py-8 lg:py-0 min-h-screen lg:min-h-auto">
+                <div className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-6 lg:px-12 py-4 lg:py-16">
                     <div className="w-full max-w-md">
                         {/* Mobile branding */}
-                        <div className="lg:hidden text-center mb-10 pt-4">
-                            <div className="inline-flex items-center justify-center w-16 h-16 bg-white bg-opacity-20 rounded-2xl mb-4 backdrop-blur-lg ring-2 ring-white ring-opacity-30">
-                                <span className="text-4xl">🍽️</span>
+                        <div className="lg:hidden text-center mb-4 pt-4">
+                            <div className="inline-flex items-center justify-center w-12 h-12 bg-white bg-opacity-20 rounded-2xl mb-2 backdrop-blur-lg ring-2 ring-white ring-opacity-30">
+                                <span className="text-3xl">🍽️</span>
                             </div>
-                            <h1 className="text-4xl font-display font-bold text-white mb-2">DishPoll</h1>
-                            <p className="text-white text-opacity-80 text-sm font-light">Voting Platform</p>
+                            <h1 className="text-3xl font-display font-bold text-white mb-1">DishPoll</h1>
                         </div>
 
                         {/* Form card - Enhanced design */}
                         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 transform transition-all">
                             {/* Header with gradient */}
-                            <div className="bg-gradient-to-r from-primary-50 to-secondary-50 px-6 sm:px-8 py-8 border-b border-gray-100">
+                            <div className="bg-gradient-to-r from-primary-50 to-secondary-50 px-6 sm:px-8 py-5 sm:py-8 border-b border-gray-100">
                                 <div className="flex items-center gap-3 mb-2">
                                     <span className="text-3xl">🔐</span>
                                     <h2 className="text-2xl font-display font-bold text-gray-900">Welcome Back</h2>
@@ -158,8 +157,8 @@ const LoginForm = memo(() => {
                             </div>
 
                             {/* Form section */}
-                            <div className="px-6 sm:px-8 py-8">
-                                <form onSubmit={handleSubmit} className="space-y-5">
+                            <div className="px-6 sm:px-8 py-6 sm:py-8">
+                                <form onSubmit={handleSubmit} className="space-y-4">
                                     {/* Username field */}
                                     <div className="space-y-2.5">
                                         <label htmlFor="username" className="block text-sm font-semibold text-gray-800 flex items-center gap-2">
@@ -174,11 +173,10 @@ const LoginForm = memo(() => {
                                                 value={formData.username}
                                                 onChange={handleChange}
                                                 disabled={isLoading}
-                                                className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-300 font-medium text-gray-900 placeholder-gray-400 focus:outline-none ${
-                                                    formErrors.username 
-                                                        ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200'
-                                                        : 'border-gray-300 bg-gray-50 focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-200'
-                                                }`}
+                                                className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-300 font-medium text-gray-900 placeholder-gray-400 focus:outline-none ${formErrors.username
+                                                    ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200'
+                                                    : 'border-gray-300 bg-gray-50 focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-200'
+                                                    }`}
                                                 placeholder="Enter your username"
                                                 aria-label="Username"
                                                 aria-invalid={!!formErrors.username}
@@ -207,11 +205,10 @@ const LoginForm = memo(() => {
                                                 value={formData.password}
                                                 onChange={handleChange}
                                                 disabled={isLoading}
-                                                className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-300 font-medium text-gray-900 placeholder-gray-400 focus:outline-none ${
-                                                    formErrors.password 
-                                                        ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200'
-                                                        : 'border-gray-300 bg-gray-50 focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-200'
-                                                }`}
+                                                className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-300 font-medium text-gray-900 placeholder-gray-400 focus:outline-none ${formErrors.password
+                                                    ? 'border-red-400 bg-red-50 focus:border-red-500 focus:ring-2 focus:ring-red-200'
+                                                    : 'border-gray-300 bg-gray-50 focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-200'
+                                                    }`}
                                                 placeholder="Enter your password"
                                                 aria-label="Password"
                                                 aria-invalid={!!formErrors.password}
@@ -258,16 +255,16 @@ const LoginForm = memo(() => {
                                 </form>
 
                                 {/* Info note */}
-                                <div className="mt-8 pt-6 border-t border-gray-200">
-                                    <p className="text-center text-xs text-gray-600 font-medium leading-relaxed">
-                                        🔒 Your login credentials are secure and encrypted. This is a demo application.
+                                <div className="mt-4 pt-3 border-t border-gray-200">
+                                    <p className="text-center text-[10px] text-gray-600 font-medium leading-relaxed">
+                                        🔒 Your credentials are secure. This is a demo.
                                     </p>
                                 </div>
                             </div>
                         </div>
 
                         {/* Footer */}
-                        <p className="text-center text-xs text-white text-opacity-70 mt-6 font-medium">
+                        <p className="text-center text-[10px] text-white text-opacity-70 mt-4 font-medium">
                             © 2026 DishPoll • All Rights Reserved
                         </p>
                     </div>
