@@ -1,36 +1,41 @@
+import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
+import { LAYOUT } from '../../utils/styleConstants';
 
-const Navigation = () => {
+const Navigation = memo(() => {
     const navItems = [
-        { path: '/vote', label: 'Vote', icon: '🗳️', description: 'Cast your votes' },
-        { path: '/results', label: 'Results', icon: '📊', description: 'View rankings' }
+        { path: '/vote', label: 'Voting', icon: '🗳️', description: 'Cast your votes for dishes' },
+        { path: '/results', label: 'Results', icon: '📊', description: 'View rankings and statistics' }
     ];
 
     return (
-        <nav className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40">
-            <div className="container mx-auto px-4">
-                <div className="flex gap-1">
+        <nav className="sticky top-14 sm:top-16 z-40 bg-white border-b border-gray-200 shadow-sm">
+            <div className={`${LAYOUT.CONTAINER}`}>
+                <div className="flex gap-0 -mb-px">
                     {navItems.map(item => (
                         <NavLink
                             key={item.path}
                             to={item.path}
                             className={({ isActive }) => `
-                                flex items-center gap-2 px-6 py-4 font-semibold transition-all duration-200 relative
+                                flex items-center gap-1.5 sm:gap-2.5 px-3 sm:px-5 lg:px-6 py-3 sm:py-4 font-semibold 
+                                transition-all duration-200 relative text-xs sm:text-sm lg:text-base
                                 ${isActive
-                                    ? 'text-blue-600 border-b-2 border-blue-600 bg-blue-50'
-                                    : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
+                                    ? 'text-primary-600 border-b-2 border-primary-600 bg-primary-50'
+                                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50 border-b-2 border-transparent'
                                 }
                             `}
                             title={item.description}
                         >
-                            <span className="text-xl">{item.icon}</span>
-                            <span className="hidden sm:inline">{item.label}</span>
+                            <span className="text-base sm:text-lg" aria-hidden="true">{item.icon}</span>
+                            <span className="hidden sm:inline font-medium">{item.label}</span>
                         </NavLink>
                     ))}
                 </div>
             </div>
         </nav>
     );
-};
+});
+
+Navigation.displayName = 'Navigation';
 
 export default Navigation;
